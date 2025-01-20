@@ -1,0 +1,21 @@
+{
+  "name": "zidelok",
+  "displayName": "Site downloader/runner",
+  "version": "0.0.1",
+  "description": "Site loader to run static sites locally",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "dist-windows": "node ./tools/dist-windows.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bigcamp",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^34.0.0"
+  },
+  "dependencies": {
+    "unzipper": "^0.12.3"
+  }
+}

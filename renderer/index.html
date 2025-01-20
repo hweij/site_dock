@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <link rel="manifest" href="manifest.json" crossorigin="use-credentials" />
+    <link rel="icon" type="image/png" href="./zidelok.png">
+    <title>Zidelok</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='./main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='./fonts.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='./menubar.css'>
+
+    <script type="module" src="main.js"></script>
+</head>
+
+<body>
+    <div id="menu-bar"></div>
+
+    <div id="home" class="page">
+
+        <h1>Installed web apps</h1>
+
+        <div id="localSites" class="site-list">Local sites go here</div>
+
+        <button id="bDownload" class="wide-button">Install app from remote site</button>
+    </div>
+    <div id="settings" class="page hidden">
+        <h1>Settings</h1>
+
+        <div class="settings">
+            <div>Start URL</div>
+            <input id="inputStartURL" />
+        </div>
+
+        <button id="bApplySettings" class="wide-button">Save settings</button>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+body {
+    padding: 0px;
+    margin: 0px;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: max-content auto;
+    overflow: hidden;
+    font-family: "ns";
+}
+
+.page {
+    box-sizing: border-box;
+    display: grid;
+    padding: 10px;
+    grid-template-rows: max-content auto max-content;
+}
+
+.hidden {
+    display: none;
+}
+
+.settings {
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-auto-rows: max-content;
+    gap: 4px;
+}
+
+.site-list-entry {
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: #eeeeee;
+    display: grid;
+    grid-template-columns: auto 40px 40px 40px;
+    column-gap: 4px;
+}
+
+.site-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: auto;
+}
+
+.wide-button {
+    font-size: 18px;
+    padding: 4px;
+}

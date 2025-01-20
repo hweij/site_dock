@@ -1,0 +1,13 @@
+#menu-bar {
+    user-select: none;
+    display: flex;
+    background-color: #dddddd;
+}
+
+.menu-item {
+    padding: 4px 8px;
+}
+
+.menu-item:hover {
+    background-color: #eeeeee;
+}

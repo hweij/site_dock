@@ -1,0 +1,16 @@
+{
+    "name": "Site loader",
+    "short_name": "Site loader",
+    "start_url": "./index.html",
+    "display": "fullscreen",
+    "orientation": "landscape",
+    "background_color": "#000",
+    "description": "Demo side loader",
+    "icons": [
+        {
+            "src": "./zidelok.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
