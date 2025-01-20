@@ -16,6 +16,7 @@ const API = (/** @type any */ (window)).electronAPI;
 const uiAction = API.uiAction;
 
 const inputStartURL = /** @type HTMLInputElement */ (document.getElementById("inputStartURL"));
+const cbStartFS = /** @type HTMLInputElement */ (document.getElementById("cbStartFS"));
 const bApplySettings = /** @type HTMLButtonElement */ (document.getElementById("bApplySettings"));
 
 async function setMode(mode) {
@@ -38,8 +39,11 @@ export function init() {
     bDownload.onclick = () => API.uiAction("loadRemote");
 
     bApplySettings.onclick = () => {
+        const params = {};
         const url = inputStartURL.value;
-        uiAction("setStartURL", { url });
+        params.url = url;
+        params.startFS = cbStartFS.checked;
+        uiAction("applySettings", params);
         // Done: go back home
         setMode("home");
     }
@@ -82,6 +86,11 @@ export function init() {
         // Start URL
         if (changes.startURL) {
             (/** @type HTMLInputElement */ (document.getElementById("inputStartURL"))).value = changes.startURL;
+        }
+
+        // Start apps in fullscreen mode
+        if (changes.startFS) {
+            (/** @type HTMLInputElement */ (document.getElementById("cbStartFS"))).checked = changes.startFS;
         }
     });
 

@@ -1,5 +1,6 @@
 interface AppState {
     startURL?: string;
+    startFS?: boolean;
     localSites?: LocalSite[];
 }
 

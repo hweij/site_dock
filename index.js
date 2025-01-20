@@ -49,7 +49,7 @@ const prevAppState = {
 function showAppWindow(b) {
     if (b) {
         winApp.show();
-        winApp.setFullScreen(true);
+        winApp.setFullScreen(appState.startFS || false);
     }
     else {
         // If fullscreen, restore, else hide window
@@ -79,16 +79,15 @@ export function createWindow() {
                 console.log(`Launching site ${params.name}`);
                 launchSite(params.name);
                 break;
-            case "setStartURL":
-                if (params.url) {
-                    settings.startURL = params.url;
-                    saveSettings();
-                    appState.startURL = params.url;
-                    syncState();
-                }
-                else {
-                    console.error(`Invalid URL: ${params.url}`);
-                }
+            case "applySettings":
+                // Start URL
+                settings.startURL = params.url;
+                appState.startURL = params.url;
+                // Start in fullscreen option
+                settings.startFS = params.url;
+                appState.startFS = params.startFS;
+                saveSettings();
+                syncState();
                 break;
             default:
                 console.error(`Undefined action: ${action}`);
@@ -101,6 +100,7 @@ app.whenReady().then(async () => {
     settings = await getSettings();
     // Get remote URL
     appState.startURL = settings.startURL;
+    appState.startFS = Boolean(settings.startFS);
     // Load local sites
     appState.localSites = await getLocalSites();
     globalShortcut.register('Escape', () => {
