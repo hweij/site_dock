@@ -74,10 +74,11 @@ export function init() {
                 const line = document.createElement("div");
                 line.className = "site-list-entry";
                 const name = e.name;
-                const expanded = e.expanded ? "x" : "";
-                const zipped = e.zipped ? "z" : "";
+                // const expanded = e.expanded ? "x" : "";
+                // const zipped = e.zipped ? "z" : "";
                 const info = "info";
-                line.innerHTML = `<div>${name}</div><div>${expanded}</div><div>${zipped}</div><div>${info}</div>`;
+                // line.innerHTML = `<div>${name}</div><div>${expanded}</div><div>${zipped}</div><div>${info}</div>`;
+                line.innerHTML = `<div>${name}</div><div>${info}</div>`;
                 divLocalSites.append(line);
                 line.onclick = () => uiAction("launchSite", { name });
             }
