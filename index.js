@@ -84,7 +84,7 @@ export function createWindow() {
                 settings.startURL = params.url;
                 appState.startURL = params.url;
                 // Start in fullscreen option
-                settings.startFS = params.url;
+                settings.startFS = params.startFS;
                 appState.startFS = params.startFS;
                 saveSettings();
                 syncState();
