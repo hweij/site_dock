@@ -1,5 +1,5 @@
 {
-  "name": "zidelok",
+  "name": "remote_site_dock",
   "displayName": "Site downloader/runner",
   "version": "0.0.1",
   "description": "Site loader to run static sites locally",

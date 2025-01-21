@@ -1,4 +1,4 @@
-# Zidelok
+# Remote site dock
 
 Download, install, and run static web sites/apps.
 
