@@ -9,6 +9,7 @@
     "start": "electron .",
     "dist-windows": "node ./tools/dist-windows.js",
     "pack-win": "electron-builder --win zip --x64",
+    "pack-mac": "electron-builder --mac dmg",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "bigcamp",
