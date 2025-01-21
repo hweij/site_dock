@@ -8,12 +8,14 @@
   "scripts": {
     "start": "electron .",
     "dist-windows": "node ./tools/dist-windows.js",
+    "pack-win": "electron-builder --win zip --x64",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "bigcamp",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^34.0.0"
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8"
   },
   "dependencies": {
     "unzipper": "^0.12.3"
