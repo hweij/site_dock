@@ -8,7 +8,7 @@
   "scripts": {
     "start": "electron .",
     "pack-win": "electron-builder --win zip --x64",
-    "pack-mac": "electron-builder --mac dmg",
+    "pack-mac": "electron-builder --mac dmg --x64 --arm64",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "bigcamp",
