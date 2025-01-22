@@ -2,6 +2,8 @@
 /// <reference path="../types.d.ts" />
 "use strict"
 
+import { EL } from "./util.js";
+
 /** @type AppState */
 const appState = {
     localSites: []
@@ -61,16 +63,16 @@ export function init() {
             divLocalSites.innerHTML = "";
             if (sites.length) {
                 for (let e of sites) {
-                    const line = document.createElement("div");
-                    line.className = "site-list-entry";
                     const name = e.name;
-                    // const expanded = e.expanded ? "x" : "";
-                    // const zipped = e.zipped ? "z" : "";
-                    const info = "info";
-                    // line.innerHTML = `<div>${name}</div><div>${expanded}</div><div>${zipped}</div><div>${info}</div>`;
-                    line.innerHTML = `<div>${name}</div><div>${info}</div>`;
+                    const bInfo = EL("div", "info", "info");
+                    const bDelete = EL("div", "delete", "delete");
+                    const entryOptions = EL("div", "entry-options", bInfo, bDelete);
+                    const line = EL("div", "site-list-entry", name, entryOptions);
+
                     divLocalSites.append(line);
                     line.onclick = () => uiAction("launchSite", { name });
+                    bInfo.onclick = (evt) => { evt.stopPropagation(); console.log("INFO"); };
+                    bDelete.onclick = (evt) => { evt.stopPropagation(); uiAction("deleteSite", { name }); };
                 }
             }
             else {

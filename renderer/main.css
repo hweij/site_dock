@@ -25,14 +25,44 @@ body {
     gap: 4px;
 }
 
+.info:hover {
+    background-color: #cccccc;
+}
+
+.delete {
+    color: red;
+}
+
+.delete:hover {
+    background-color: #cccccc;
+}
+
+.entry-options {
+    visibility: hidden;
+    display: flex;
+    gap: 10px;
+}
+
+.entry-options>* {
+    padding: 0px 4px;
+}
+
 .site-list-entry {
     cursor: pointer;
     padding: 4px;
     border-radius: 4px;
     background-color: #eeeeee;
     display: grid;
-    grid-template-columns: auto 40px;
-    column-gap: 4px;
+    grid-template-columns: auto max-content;
+    column-gap: 10px;
+}
+
+.site-list-entry:hover {
+    background-color: #dddddd;
+}
+
+.site-list-entry:hover .entry-options {
+    visibility: visible;
 }
 
 .site-list {

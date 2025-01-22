@@ -78,6 +78,10 @@ export function createWindow() {
                 console.log(`Launching site ${params.name}`);
                 launchSite(params.name);
                 break;
+            case "deleteSite":
+                console.log(`Deleting site ${params.name}`);
+                deleteSite(params.name);
+                break;
             case "applySettings":
                 // Start URL
                 settings.startURL = params.url;
@@ -249,6 +253,22 @@ async function launchSite(name) {
         showAppWindow(true);
         winApp.loadFile(indexHTML);
     }
+}
+
+/**
+ * Delete a local site
+ * @param name string
+ */
+async function deleteSite(name) {
+    const dir = path.resolve(sitesDir, name);
+    const zipFile = path.join(sitesDir, name + ".zip");
+    if (fs.existsSync(dir)) {
+        await fs.promises.rm(dir, { recursive: true });
+    }
+    if (fs.existsSync(zipFile)) {
+        await fs.promises.rm(zipFile);
+    }
+    await refreshLocalSites();
 }
 
 /**
