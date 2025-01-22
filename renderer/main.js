@@ -33,6 +33,8 @@ export function init() {
 
     const bDownload = /** @type HTMLButtonElement */ (document.getElementById("bDownload"));
     bDownload.onclick = () => API.uiAction("loadRemote");
+    const bLocalApp = /** @type HTMLButtonElement */ (document.getElementById("bLocalApp"));
+    bLocalApp.onclick = () => API.uiAction("loadLocal");
     const bSettings = /** @type HTMLButtonElement */ (document.getElementById("bSettings"));
     bSettings.onclick = () => setMode("settings");
 

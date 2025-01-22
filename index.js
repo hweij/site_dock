@@ -1,7 +1,7 @@
 // @ts-check
 /// <reference path="./types.d.ts" />
 
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, WebContentsView } from 'electron';
+import { app, BrowserWindow, dialog, globalShortcut, ipcMain, Menu, WebContentsView } from 'electron';
 import * as path from 'path';
 import * as fs from "fs";
 import * as unzipper from 'unzipper';
@@ -77,6 +77,9 @@ export function createWindow() {
         switch (action) {
             case "loadRemote":
                 loadRemote();
+                break;
+            case "loadLocal":
+                loadLocal();
                 break;
             case "launchSite":
                 console.log(`Launching site ${params.name}`);
@@ -346,4 +349,31 @@ function syncState() {
     else {
         console.log("No changes detected");
     }
+}
+
+async function loadLocal() {
+    const res = await openFile();
+    if (!res.canceled) {
+        const sourceFile = res.filePaths[0];
+        if (sourceFile.endsWith(".zip")) {
+            const fName = path.parse(sourceFile).base;
+            const destFile = path.resolve(sitesDir, fName);
+            await fs.promises.copyFile(sourceFile, destFile);
+            console.log(`Copied file ${sourceFile} to ${destFile}`);
+            refreshLocalSites();
+        }
+        else {
+            console.log(`File ${sourceFile} is not a valid zip-archive`);
+        }
+    }
+}
+
+async function openFile() {
+    const dial = dialog;
+
+    const res = await dial.showOpenDialog(winMain, {
+        properties: ['openFile']
+    });
+
+    return res;
 }
