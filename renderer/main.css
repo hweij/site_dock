@@ -2,14 +2,13 @@ body {
     padding: 0px;
     margin: 0px;
     height: 100vh;
-    display: grid;
-    grid-template-rows: max-content auto;
     overflow: hidden;
     font-family: "ns";
 }
 
 .page {
     box-sizing: border-box;
+    height: 100%;
     display: grid;
     padding: 10px;
     grid-template-rows: max-content auto max-content;
@@ -46,4 +45,14 @@ body {
 .wide-button {
     font-size: 18px;
     padding: 4px;
+}
+
+.button-bar {
+    display: flex;
+    gap: 10px;
+    justify-content: stretch;
+}
+
+.button-bar>* {
+    flex: 1;
 }

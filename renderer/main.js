@@ -2,8 +2,6 @@
 /// <reference path="../types.d.ts" />
 "use strict"
 
-import { addMenuItems } from "./menubar.js";
-
 /** @type AppState */
 const appState = {
     localSites: []
@@ -13,10 +11,6 @@ const API = (/** @type any */ (window)).electronAPI;
 
 /** @type (name: string, params: object) => void */
 const uiAction = API.uiAction;
-
-const inputStartURL = /** @type HTMLInputElement */ (document.getElementById("inputStartURL"));
-const cbStartFS = /** @type HTMLInputElement */ (document.getElementById("cbStartFS"));
-const bApplySettings = /** @type HTMLButtonElement */ (document.getElementById("bApplySettings"));
 
 async function setMode(mode) {
     const pages = document.querySelectorAll(".page");
@@ -31,21 +25,14 @@ async function setMode(mode) {
 }
 
 export function init() {
+    initSettings();
+
     const API = (/** @type any */ (window)).electronAPI;
 
     const bDownload = /** @type HTMLButtonElement */ (document.getElementById("bDownload"));
-
     bDownload.onclick = () => API.uiAction("loadRemote");
-
-    bApplySettings.onclick = () => {
-        const params = {};
-        const url = inputStartURL.value;
-        params.url = url;
-        params.startFS = cbStartFS.checked;
-        uiAction("applySettings", params);
-        // Done: go back home
-        setMode("home");
-    }
+    const bSettings = /** @type HTMLButtonElement */ (document.getElementById("bSettings"));
+    bSettings.onclick = () => setMode("settings");
 
     // Define handlers for main => renderer actions
     API.onMainAction(
@@ -93,17 +80,27 @@ export function init() {
             (/** @type HTMLInputElement */ (document.getElementById("cbStartFS"))).checked = changes.startFS;
         }
     });
-
-    populateMenuBar();
 }
 
-function populateMenuBar() {
-    addMenuItems([
-        { label: "Home", action: () => setMode("home") },
-        { label: "Sites" },
-        { label: "View" },
-        { label: "Settings", action: () => setMode("settings") }
-    ]);
+function initSettings() {
+    const inputStartURL = /** @type HTMLInputElement */ (document.getElementById("inputStartURL"));
+    const cbStartFS = /** @type HTMLInputElement */ (document.getElementById("cbStartFS"));
+    const bApplySettings = /** @type HTMLButtonElement */ (document.getElementById("bApplySettings"));
+    const bCancelSettings = /** @type HTMLButtonElement */ (document.getElementById("bCancelSettings"));
+    bApplySettings.onclick = () => {
+        const params = {};
+        const url = inputStartURL.value;
+        params.url = url;
+        params.startFS = cbStartFS.checked;
+        uiAction("applySettings", params);
+        // Done: go back home
+        setMode("home");
+    }
+    bCancelSettings.onclick = () => {
+        inputStartURL.value = appState.startURL || "";
+        cbStartFS.checked = appState.startFS || false;
+        setMode("home");
+    }
 }
 
 init();

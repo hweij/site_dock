@@ -10,21 +10,21 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='./main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='./fonts.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='./menubar.css'>
 
     <script type="module" src="main.js"></script>
 </head>
 
 <body>
-    <div id="menu-bar"></div>
-
     <div id="home" class="page">
 
         <h1>Installed web apps</h1>
 
         <div id="localSites" class="site-list">Local sites go here</div>
 
-        <button id="bDownload" class="wide-button">Install app from remote site</button>
+        <div style="display: grid; gap: 10px; grid-template-columns: 1fr max-content;">
+            <button id="bDownload" class="wide-button">Install app from remote site</button>
+            <button id="bSettings" class="wide-button">Settings</button>
+        </div>
     </div>
     <div id="settings" class="page hidden">
         <h1>Settings</h1>
@@ -39,7 +39,10 @@
             <input id="cbStartFS" type="checkbox" style="margin-right: auto;" />
         </div>
 
-        <button id="bApplySettings" class="wide-button">Save settings</button>
+        <div class="button-bar">
+            <button id="bCancelSettings" class="wide-button">Cancel</button>
+            <button id="bApplySettings" class="wide-button">Save settings</button>
+        </div>
     </div>
 </body>
 
