@@ -83,16 +83,7 @@ export function init() {
                 ].join("<br/>");
             }
         }
-
-        // Start URL
-        if (changes.startURL) {
-            (/** @type HTMLInputElement */ (document.getElementById("inputStartURL"))).value = changes.startURL;
-        }
-
-        // Start apps in fullscreen mode
-        if (changes.startFS) {
-            (/** @type HTMLInputElement */ (document.getElementById("cbStartFS"))).checked = changes.startFS;
-        }
+        applySettingsChanges(changes);
     });
 }
 
@@ -114,6 +105,22 @@ function initSettings() {
         inputStartURL.value = appState.startURL || "";
         cbStartFS.checked = appState.startFS || false;
         setMode("home");
+    }
+}
+
+/**
+ * Apply changes in state to settings fields
+ * @param {AppState} changes
+ */
+function applySettingsChanges(changes) {
+    // Start URL
+    if (changes.startURL) {
+        (/** @type HTMLInputElement */ (document.getElementById("inputStartURL"))).value = changes.startURL;
+    }
+
+    // Start apps in fullscreen mode
+    if (changes.startFS) {
+        (/** @type HTMLInputElement */ (document.getElementById("cbStartFS"))).checked = changes.startFS;
     }
 }
 
