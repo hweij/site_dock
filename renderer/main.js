@@ -1,9 +1,8 @@
 // @ts-check
+/// <reference path="../types.d.ts" />
 "use strict"
 
 import { addMenuItems } from "./menubar.js";
-
-/// <reference path="../types.d.ts" />
 
 /** @type AppState */
 const appState = {

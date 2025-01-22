@@ -1,5 +1,4 @@
 // @ts-check
-
 /// <reference path="./types.d.ts" />
 
 import { app, BrowserWindow, globalShortcut, ipcMain, Menu, WebContentsView } from 'electron';
