@@ -50,6 +50,9 @@ export function init() {
         console.log("State changed");
         console.log(changes);
 
+        // Apply changes to the state
+        Object.assign(appState, changes);
+
         // Local sites
         if (changes.localSites) {
             const sites = changes.localSites;
