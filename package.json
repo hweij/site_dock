@@ -1,13 +1,12 @@
 {
   "name": "remote_site_dock",
   "displayName": "Site downloader/runner",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Site loader to run static sites locally",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "electron .",
-    "dist-windows": "node ./tools/dist-windows.js",
     "pack-win": "electron-builder --win zip --x64",
     "pack-mac": "electron-builder --mac dmg",
     "test": "echo \"Error: no test specified\" && exit 1"
