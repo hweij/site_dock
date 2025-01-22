@@ -72,7 +72,8 @@ export function init() {
                     divLocalSites.append(line);
                     line.onclick = () => uiAction("launchSite", { name });
                     bInfo.onclick = (evt) => { evt.stopPropagation(); uiAction("infoSite", { name }); };
-                    bDelete.onclick = (evt) => { evt.stopPropagation(); uiAction("deleteSite", { name }); };
+                    // bDelete.onclick = (evt) => { evt.stopPropagation(); uiAction("deleteSite", { name }); showDialog(`Delete app ${name}?`) };
+                    bDelete.onclick = (evt) => { evt.stopPropagation(); showDialog(`Delete app ${name}?`, () => uiAction("deleteSite", { name })) };
                 }
             }
             else {
@@ -127,6 +128,28 @@ function applySettingsChanges(changes) {
     if (changes.startFS) {
         (/** @type HTMLInputElement */ (document.getElementById("cbStartFS"))).checked = changes.startFS;
     }
+}
+
+
+const dialog = /** @type HTMLDialogElement */ (document.getElementById("dialog"));
+const bDialogConfirm = /** @type HTMLButtonElement */ (document.getElementById("bDialogConfirm"));
+const bDialogCancel = /** @type HTMLButtonElement */ (document.getElementById("bDialogCancel"));
+const dialogContent = /** @type HTMLDivElement */ (document.getElementById("dialogContent"));
+
+/**
+ *
+ * @param {string} text
+ * @param {() => void} action
+ */
+function showDialog(text, action) {
+    bDialogConfirm.onclick = () => { action(); hideDialog(); };
+    bDialogCancel.onclick = hideDialog;
+    dialogContent.innerText = text;
+    dialog.showModal();
+}
+
+function hideDialog() {
+    dialog.close();
 }
 
 init();
