@@ -71,7 +71,7 @@ export function init() {
 
                     divLocalSites.append(line);
                     line.onclick = () => uiAction("launchSite", { name });
-                    bInfo.onclick = (evt) => { evt.stopPropagation(); console.log("INFO"); };
+                    bInfo.onclick = (evt) => { evt.stopPropagation(); uiAction("infoSite", { name }); };
                     bDelete.onclick = (evt) => { evt.stopPropagation(); uiAction("deleteSite", { name }); };
                 }
             }

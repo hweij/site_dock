@@ -19,6 +19,9 @@ var remoteWindow;
 /** @type BrowserWindow */
 var winApp;
 
+/** @type BrowserWindow */
+var winInfo;
+
 /** If set to true, the remote window will allow closing (see close event on remote window) */
 var appClosing = false;
 
@@ -65,6 +68,7 @@ export function createWindow() {
     createMainWindow();
     createRemoteWindow();
     createAppWindow();
+    createInfoWindow();
 
     // UI-action
     ipcMain.on('ui-action', (_evt, action, params) => {
@@ -77,6 +81,10 @@ export function createWindow() {
             case "launchSite":
                 console.log(`Launching site ${params.name}`);
                 launchSite(params.name);
+                break;
+            case "infoSite":
+                console.log(`Info about site ${params.name}`);
+                infoSite(params.name);
                 break;
             case "deleteSite":
                 console.log(`Deleting site ${params.name}`);
@@ -143,6 +151,7 @@ function createMainWindow() {
         appClosing = true;
         remoteWindow.close();
         winApp.close();
+        winInfo.close();
     });
 }
 
@@ -210,6 +219,24 @@ function createAppWindow() {
     });
 }
 
+function createInfoWindow() {
+    winInfo = new BrowserWindow({
+        width: 600,
+        height: 800,
+        autoHideMenuBar: true,
+        title: "Info",
+        show: false
+    });
+
+    // Only hide the window, unless explicitly indicated to close it
+    winInfo.on('close', evt => {
+        if (!appClosing) {
+            evt.preventDefault();
+            winInfo.hide();
+        }
+    });
+}
+
 async function refreshLocalSites() {
     appState.localSites = await getLocalSites();
     syncState();
@@ -269,6 +296,21 @@ async function deleteSite(name) {
         await fs.promises.rm(zipFile);
     }
     await refreshLocalSites();
+}
+
+/**
+ * Show site info
+ * @param name string
+ */
+async function infoSite(name) {
+    const infoFile = path.resolve(sitesDir, name, "app_info.html");
+    if (fs.existsSync(infoFile)) {
+        winInfo.loadFile(infoFile);
+        winInfo.show();
+    }
+    else {
+        console.log(`No info available on app ${name}`);
+    }
 }
 
 /**
