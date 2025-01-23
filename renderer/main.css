@@ -6,12 +6,19 @@ body {
     font-family: "ns";
 }
 
+h1 {
+    color: #1d66cd;
+    line-height: 1;
+}
+
 .page {
     box-sizing: border-box;
     height: 100%;
     display: grid;
     padding: 10px;
+    row-gap: 10px;
     grid-template-rows: max-content auto max-content;
+    background-color: #ffffff;
 }
 
 .hidden {
@@ -26,7 +33,7 @@ body {
 }
 
 .info:hover {
-    background-color: #cccccc;
+    background-color: #97c2ff;
 }
 
 .delete {
@@ -34,7 +41,7 @@ body {
 }
 
 .delete:hover {
-    background-color: #cccccc;
+    background-color: #97c2ff;
 }
 
 .entry-options {
@@ -45,20 +52,21 @@ body {
 
 .entry-options>* {
     padding: 0px 4px;
+    border-radius: 3px;
 }
 
 .site-list-entry {
     cursor: pointer;
-    padding: 4px;
+    padding: 4px 4px 4px 8px;
     border-radius: 4px;
-    background-color: #eeeeee;
+    background-color: #c8dfff;
     display: grid;
     grid-template-columns: auto max-content;
     column-gap: 10px;
 }
 
 .site-list-entry:hover {
-    background-color: #dddddd;
+    background-color: #b0d1ff;
 }
 
 .site-list-entry:hover .entry-options {
@@ -68,13 +76,21 @@ body {
 .site-list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
     overflow: auto;
 }
 
-.wide-button {
+.app-button {
+    cursor: pointer;
     font-size: 18px;
     padding: 4px;
+    background-color: #97c2ff;
+    border: none;
+    border-radius: 4px;
+}
+
+.app-button:hover {
+    background-color: #83b7ff;
 }
 
 .button-bar {

@@ -22,9 +22,9 @@
         <div id="localSites" class="site-list">Local sites go here</div>
 
         <div style="display: grid; gap: 10px; grid-template-columns: 1fr 1fr max-content;">
-            <button id="bDownload" class="wide-button">Install app from remote site</button>
-            <button id="bLocalApp" class="wide-button">Install app from local archive</button>
-            <button id="bSettings" class="wide-button">Settings</button>
+            <button id="bDownload" class="app-button">Install app from remote site</button>
+            <button id="bLocalApp" class="app-button">Install app from local archive</button>
+            <button id="bSettings" class="app-button">Settings</button>
         </div>
     </div>
     <div id="settings" class="page hidden">
@@ -41,15 +41,20 @@
         </div>
 
         <div class="button-bar">
-            <button id="bCancelSettings" class="wide-button">Cancel</button>
-            <button id="bApplySettings" class="wide-button">Save settings</button>
+            <button id="bCancelSettings" class="app-button">Cancel</button>
+            <button id="bApplySettings" class="app-button">Save settings</button>
         </div>
     </div>
 
-    <dialog id="dialog">
-        <div id="dialogContent">Dialog text here</div>
-        <button id="bDialogCancel">Cancel</button>
-        <button id="bDialogConfirm">OK</button>
+    <dialog id="dialog" style="border-radius: 4px; border-color: #83b7ff;">
+        <div style="height: 100%; display: flex; flex-direction: column; gap: 10px;">
+            <div id="dialogContent">
+            </div>
+            <div class="button-bar">
+                <button id="bDialogCancel" class="app-button">Cancel</button>
+                <button id="bDialogConfirm" class="app-button">OK</button>
+            </div>
+        </div>
     </dialog>
 </body>
 
