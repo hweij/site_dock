@@ -304,7 +304,7 @@ async function deleteSite(name) {
  * @param name string
  */
 async function infoSite(name) {
-    const infoFile = path.resolve(sitesDir, name, "app_info.html");
+    const infoFile = path.resolve(sitesDir, name, "app_info/index.html");
     if (fs.existsSync(infoFile)) {
         winInfo.loadFile(infoFile);
         winInfo.show();
