@@ -173,8 +173,6 @@ function createRemoteWindow() {
         const fileName = item.getFilename();
         const dlPath = path.resolve(sitesDir, fileName);
         const dirName = path.parse(fileName).name;
-        const dlDir = path.resolve(sitesDir, dirName);
-        console.log("DOWNLOAD CALLBACK");
         // Set the save path, making Electron not to prompt a save dialog.
         item.setSavePath(dlPath);
         console.log(`Set save path to ${item.getSavePath()}`);

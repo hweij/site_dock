@@ -17,6 +17,12 @@ export class RemoteWindow extends BrowserWindow {
         console.log(url);
     }
 
+    updateLayout = () => {
+        const bounds = this.contentView.getBounds();
+        this.vAddress.setBounds({ x: 0, y: 0, width: bounds.width, height: 40 });
+        this.vContent.setBounds({ x: 0, y: 40, width: bounds.width, height: bounds.height - 40 });
+    }
+
     constructor(parent) {
         super({
             width: 800,
@@ -28,8 +34,6 @@ export class RemoteWindow extends BrowserWindow {
             show: false
         });
 
-        const bounds = this.contentView.getBounds();
-
         this.vAddress = new WebContentsView({
             webPreferences: {
                 preload: path.join(import.meta.dirname, 'preload.js')
@@ -37,18 +41,19 @@ export class RemoteWindow extends BrowserWindow {
         });
         this.contentView.addChildView(this.vAddress);
         this.vAddress.webContents.loadFile(path.join(import.meta.dirname, 'addressbar.html'));
-        this.vAddress.setBounds({ x: 0, y: 0, width: bounds.width, height: 40 });
 
         this.vContent = new WebContentsView();
         this.contentView.addChildView(this.vContent);
-        this.vContent.setBounds({ x: 0, y: 40, width: bounds.width, height: bounds.height - 40 });
 
         this.vContent.webContents.addListener('did-finish-load', this.onFinishLoad);
+
+        this.on("resize", this.updateLayout);
+        this.updateLayout();
     }
 
     /**
-     * 
-     * @param {string} url 
+     *
+     * @param {string} url
      */
     loadAndShow(url) {
         this.show();
@@ -57,7 +62,7 @@ export class RemoteWindow extends BrowserWindow {
 
     /**
      * Set URL
-     * @param {string} url 
+     * @param {string} url
      */
     setURL(url) {
         this.vAddress.webContents.send("set-url", url);
@@ -66,7 +71,7 @@ export class RemoteWindow extends BrowserWindow {
 
     /**
      * Add download handler
-     * @param {(event: Electron.Event, item: Electron.DownloadItem, webContents: Electron.WebContents) => void} cb 
+     * @param {(event: Electron.Event, item: Electron.DownloadItem, webContents: Electron.WebContents) => void} cb
      */
     addDownloadHandler(cb) {
         this.vContent.webContents.session.on('will-download', cb);
@@ -76,8 +81,8 @@ export class RemoteWindow extends BrowserWindow {
 // Handler for "set-url" message from renderer process
 ipcMain.on('set-url', doSetURL);
 /**
- * @param {Electron.IpcMainEvent} event 
- * @param {string} url 
+ * @param {Electron.IpcMainEvent} event
+ * @param {string} url
  */
 function doSetURL(event, url) {
     // Process URL to ensure it is valid
