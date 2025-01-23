@@ -9,6 +9,15 @@ body {
 h1 {
     color: #1d66cd;
     line-height: 1;
+    margin-block-start: 10px;
+    margin-block-end: 10px;
+}
+
+h3 {
+    color: #1d66cd;
+    line-height: 1;
+    margin-block-start: 6px;
+    margin-block-end: 4px;
 }
 
 .page {
