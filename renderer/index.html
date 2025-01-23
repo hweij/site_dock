@@ -15,19 +15,22 @@
 </head>
 
 <body>
-    <div id="home" class="page">
+    <div id="page-home" class="page">
 
-        <h1>Installed web apps</h1>
+        <div style="display: grid; grid-template-columns: 1fr max-content max-content; align-items: center; gap: 10px;">
+            <h1>Remote site dock</h1>
+            <div class="text-button" id="bSettings">Settings</div>
+            <div class="text-button" id="bHelp">Help</div>
+        </div>
 
         <div id="localSites" class="site-list">Local sites go here</div>
 
-        <div style="display: grid; gap: 10px; grid-template-columns: 1fr 1fr max-content;">
+        <div style="display: grid; gap: 10px; grid-template-columns: 1fr 1fr;">
             <button id="bDownload" class="app-button">Install app from remote site</button>
             <button id="bLocalApp" class="app-button">Install app from local archive</button>
-            <button id="bSettings" class="app-button">Settings</button>
         </div>
     </div>
-    <div id="settings" class="page hidden">
+    <div id="page-settings" class="page hidden">
         <h1>Settings</h1>
 
         <div class="settings">
@@ -43,6 +46,17 @@
         <div class="button-bar">
             <button id="bCancelSettings" class="app-button">Cancel</button>
             <button id="bApplySettings" class="app-button">Save settings</button>
+        </div>
+    </div>
+    <div id="page-help" class="page hidden">
+        <h1>Help</h1>
+
+        <p>
+            Help goes here
+        </p>
+
+        <div class="button-bar">
+            <button id="bCloseHelp" class="app-button">Close</button>
         </div>
     </div>
 

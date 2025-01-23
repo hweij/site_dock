@@ -102,3 +102,15 @@ h1 {
 .button-bar>* {
     flex: 1;
 }
+
+.text-button {
+    user-select: none;
+    cursor: pointer;
+    color: #1d66cd;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+.text-button:hover {
+    background-color: #e0ecfd;
+}

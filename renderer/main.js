@@ -15,9 +15,10 @@ const API = (/** @type any */ (window)).electronAPI;
 const uiAction = API.uiAction;
 
 async function setMode(mode) {
+    const pageID = `page-${mode}`;
     const pages = document.querySelectorAll(".page");
     for (const page of pages) {
-        if (page.id === mode) {
+        if (page.id === pageID) {
             page.classList.remove("hidden");
         }
         else {
@@ -37,6 +38,10 @@ export function init() {
     bLocalApp.onclick = () => API.uiAction("loadLocal");
     const bSettings = /** @type HTMLButtonElement */ (document.getElementById("bSettings"));
     bSettings.onclick = () => setMode("settings");
+    const bHelp = /** @type HTMLButtonElement */ (document.getElementById("bHelp"));
+    bHelp.onclick = () => setMode("help");
+    const bCloseHelp = /** @type HTMLButtonElement */ (document.getElementById("bCloseHelp"));
+    bCloseHelp.onclick = () => setMode("home");
 
     // Define handlers for main => renderer actions
     API.onMainAction(
