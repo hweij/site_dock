@@ -8,6 +8,12 @@ interface LocalSite {
     name: string;
     expanded: boolean;
     zipped: boolean;
+    info?: AppInfo;
+}
+
+interface AppInfo {
+    name?: string;
+    docs?: string;
 }
 
 interface MenuItemDesc {

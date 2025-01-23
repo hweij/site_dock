@@ -71,14 +71,17 @@ export function init() {
             if (sites.length) {
                 for (let e of sites) {
                     const name = e.name;
-                    const bInfo = EL("div", "info", "info");
+                    const label = e.info?.name ? e.info.name : name;
+                    const bInfo = e.info ? EL("div", "info", "info") : EL("div");
                     const bDelete = EL("div", "delete", "delete");
                     const entryOptions = EL("div", "entry-options", bInfo, bDelete);
-                    const line = EL("div", "site-list-entry", name, entryOptions);
+                    const line = EL("div", "site-list-entry", label, entryOptions);
 
                     divLocalSites.append(line);
                     line.onclick = () => uiAction("launchSite", { name });
-                    bInfo.onclick = (evt) => { evt.stopPropagation(); uiAction("infoSite", { name }); };
+                    if (e.info) {
+                        bInfo.onclick = (evt) => { evt.stopPropagation(); uiAction("infoSite", { name }); };
+                    }
                     // bDelete.onclick = (evt) => { evt.stopPropagation(); uiAction("deleteSite", { name }); showDialog(`Delete app ${name}?`) };
                     bDelete.onclick = (evt) => { evt.stopPropagation(); showDialog(`Delete app ${name}?`, () => uiAction("deleteSite", { name })) };
                 }

@@ -40,12 +40,21 @@ export async function getLocalSites() {
             }
         }
         else {
+            // Check if there's an info file present
+            const infoFile = path.join(sitesDir, f, "app_info/index.json");
+            /** @type object | undefined */
+            let info = undefined;
+            if (fs.existsSync(infoFile)) {
+                const txt = await fs.promises.readFile(infoFile, { encoding: "utf8" });
+                info = JSON.parse(txt);
+            }
             const idx = (res.findIndex(e => e.name === f));
             if (idx >= 0) {
                 res[idx].expanded = true;
+                res[idx].info = info;
             }
             else {
-                res.push({ name: f, expanded: true, zipped: false });
+                res.push({ name: f, expanded: true, zipped: false, info });
             }
         }
     }
