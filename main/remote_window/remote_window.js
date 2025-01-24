@@ -11,6 +11,9 @@ export class RemoteWindow extends BrowserWindow {
     /** @type WebContentsView */
     vContent;
 
+    /** Current remote URL */
+    currentURL = "";
+
     onFinishLoad = () => {
         console.log("Finished load!");
         const url = this.vContent.webContents.getURL();
@@ -57,7 +60,10 @@ export class RemoteWindow extends BrowserWindow {
      */
     loadAndShow(url) {
         this.show();
-        this.setURL(url);
+        if (url !== this.currentURL) {
+            this.setURL(url);
+            this.currentURL = url;
+        }
     }
 
     /**
