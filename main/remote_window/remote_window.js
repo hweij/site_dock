@@ -4,15 +4,15 @@ import * as path from "path";
 
 import { BrowserWindow, ipcMain, WebContentsView } from "electron";
 
+/** Current remote URL */
+var currentURL = "";
+
 export class RemoteWindow extends BrowserWindow {
     /** @type WebContentsView */
     vAddress;
 
     /** @type WebContentsView */
     vContent;
-
-    /** Current remote URL */
-    currentURL = "";
 
     onFinishLoad = () => {
         console.log("Finished load!");
@@ -60,9 +60,9 @@ export class RemoteWindow extends BrowserWindow {
      */
     loadAndShow(url) {
         this.show();
-        if (url !== this.currentURL) {
+        if (url !== currentURL) {
             this.setURL(url);
-            this.currentURL = url;
+            currentURL = url;
         }
     }
 
@@ -86,6 +86,10 @@ export class RemoteWindow extends BrowserWindow {
 
 // Handler for "set-url" message from renderer process
 ipcMain.on('set-url', doSetURL);
+
+// Handler for "reload-url" message from renderer process
+ipcMain.on('reload-url', doReloadURL);
+
 /**
  * @param {Electron.IpcMainEvent} event
  * @param {string} url
@@ -107,4 +111,8 @@ function doSetURL(event, url) {
     } catch (err) {
         console.error(`Invalid URL: ${url}`)
     }
+}
+
+function doReloadURL(event) {
+    doSetURL(event, currentURL);
 }

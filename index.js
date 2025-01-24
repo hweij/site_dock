@@ -72,8 +72,8 @@ export function createWindow() {
 
     // UI-action
     ipcMain.on('ui-action', (_evt, action, params) => {
-        console.log(`UI-action: ${action}`);
-        console.log(JSON.stringify(params));
+        // console.log(`UI-action: ${action}`);
+        // console.log(JSON.stringify(params));
         switch (action) {
             case "loadRemote":
                 loadRemote();
