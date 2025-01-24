@@ -9,7 +9,9 @@ body {
     --blue-2: #5499C7;
     --blue-3: #85C1E9;
     --blue-4: #AED6F1;
-    --blue-5: #FFFFFF;
+    --blue-5: #dbe7ef;
+
+    background-color: var(--blue-5);
 }
 
 h1 {
@@ -33,7 +35,6 @@ h3 {
     padding: 10px;
     row-gap: 10px;
     grid-template-rows: max-content auto max-content;
-    background-color: #ffffff;
 }
 
 .hidden {
@@ -121,7 +122,7 @@ h3 {
 .text-button {
     user-select: none;
     cursor: pointer;
-    color: var(--blue-1);
+    color: var(--blue-0);
     padding: 6px 10px;
     border-radius: 3px;
 }
