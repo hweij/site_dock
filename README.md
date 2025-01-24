@@ -1,4 +1,4 @@
-# Remote site dock
+# Site dock
 
 Download, install, and run static web sites/apps.
 

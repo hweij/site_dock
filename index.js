@@ -138,7 +138,7 @@ function createMainWindow() {
     winMain = new BrowserWindow({
         width: 640,
         height: 700,
-        title: "Remote site dock",
+        title: "Site dock",
         autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(import.meta.dirname, 'main', 'preload.js')

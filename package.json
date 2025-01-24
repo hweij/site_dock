@@ -1,7 +1,7 @@
 {
-  "name": "remote_site_dock",
+  "name": "site_dock",
   "displayName": "Site downloader/runner",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Site loader to run static sites locally",
   "main": "index.js",
   "type": "module",
