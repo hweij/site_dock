@@ -4,17 +4,23 @@ body {
     height: 100vh;
     overflow: hidden;
     font-family: "ns";
+    --blue-0: #1A5276;
+    --blue-1: #2980B9;
+    --blue-2: #5499C7;
+    --blue-3: #85C1E9;
+    --blue-4: #AED6F1;
+    --blue-5: #FFFFFF;
 }
 
 h1 {
-    color: #1d66cd;
+    color: var(--blue-1);
     line-height: 1;
     margin-block-start: 10px;
     margin-block-end: 10px;
 }
 
 h3 {
-    color: #1d66cd;
+    color: var(--blue-1);
     line-height: 1;
     margin-block-start: 6px;
     margin-block-end: 4px;
@@ -42,15 +48,15 @@ h3 {
 }
 
 .info:hover {
-    background-color: #97c2ff;
+    background-color: var(--blue-2);
 }
 
 .delete {
-    color: red;
+    color: rgb(176, 23, 23);
 }
 
 .delete:hover {
-    background-color: #97c2ff;
+    background-color: var(--blue-2);
 }
 
 .entry-options {
@@ -68,14 +74,14 @@ h3 {
     cursor: pointer;
     padding: 4px 4px 4px 8px;
     border-radius: 4px;
-    background-color: #c8dfff;
+    background-color: var(--blue-4);
     display: grid;
     grid-template-columns: auto max-content;
     column-gap: 10px;
 }
 
 .site-list-entry:hover {
-    background-color: #b0d1ff;
+    background-color: var(--blue-3);
 }
 
 .site-list-entry:hover .entry-options {
@@ -93,13 +99,13 @@ h3 {
     cursor: pointer;
     font-size: 18px;
     padding: 4px;
-    background-color: #97c2ff;
+    background-color: var(--blue-3);
     border: none;
     border-radius: 4px;
 }
 
 .app-button:hover {
-    background-color: #83b7ff;
+    background-color: var(--blue-2);
 }
 
 .button-bar {
@@ -115,11 +121,11 @@ h3 {
 .text-button {
     user-select: none;
     cursor: pointer;
-    color: #1d66cd;
+    color: var(--blue-1);
     padding: 6px 10px;
     border-radius: 3px;
 }
 
 .text-button:hover {
-    background-color: #e0ecfd;
+    background-color: var(--blue-4);
 }
