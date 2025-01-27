@@ -1,21 +1,20 @@
 // @ts-check
 /// <reference path="./types.d.ts" />
 
-import { app, BrowserWindow, dialog, globalShortcut, ipcMain, Menu, WebContentsView } from 'electron';
+import { app, BrowserWindow, dialog, globalShortcut, ipcMain } from 'electron';
 import * as path from 'path';
 import * as fs from "fs";
 import * as unzipper from 'unzipper';
 
 import { getLocalSites, initDataPaths } from './main/local_data.js';
 import { getSettings, saveSettings } from './main/settings.js';
-import { RemoteWindow } from './main/remote_window/remote_window.js';
-import { RemoteWindow2 } from './main/remote_window.js';
+import { RemoteWindow } from './main/remote_window.js';
 
 /** @type BrowserWindow */
 var winMain;
 
 /** @type RemoteWindow */
-/** @type RemoteWindow2 */
+/** @type RemoteWindow */
 var remoteWindow;
 
 /** @type BrowserWindow */
@@ -182,8 +181,7 @@ function createRemoteWindow() {
         remoteWindow.hide();
     }
 
-    remoteWindow = new RemoteWindow2(winMain, sitesDir, onDownloadReady);
-    // remoteWindow = new RemoteWindow(winMain);
+    remoteWindow = new RemoteWindow(winMain, sitesDir, onDownloadReady);
 
     // Only hide the window, unless explicitly indicated to close it
     remoteWindow.on('close', evt => {

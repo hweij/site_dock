@@ -4,7 +4,7 @@
 import * as path from "path";
 import { BrowserWindow } from "electron";
 
-export class RemoteWindow2 extends BrowserWindow {
+export class RemoteWindow extends BrowserWindow {
     /** Directory for site download and installation */
     sitesDir = "";
     /** Current remote URL */
@@ -55,7 +55,7 @@ export class RemoteWindow2 extends BrowserWindow {
         item.setSavePath(dlPath);
         console.log(`Set save path to ${item.getSavePath()}`);
 
-        item.on('updated', (event, state) => {
+        item.on('updated', (_event, state) => {
             if (state === 'interrupted') {
                 console.log('Download is interrupted but can be resumed')
             } else if (state === 'progressing') {
