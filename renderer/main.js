@@ -14,7 +14,10 @@ const API = (/** @type any */ (window)).electronAPI;
 /** @type (name: string, params: object) => void */
 const uiAction = API.uiAction;
 
+var curMode = "home";
+
 async function setMode(mode) {
+    curMode = mode;
     const pageID = `page-${mode}`;
     const pages = document.querySelectorAll(".page");
     for (const page of pages) {
@@ -50,6 +53,15 @@ export function init() {
                 case "setMode":
                     setMode(params.mode);
                     break;
+                case "closeRequest":
+                    // Close request: if in home page, close application. Otherwise, go to homepage.
+                    if (curMode === "home") {
+                        uiAction("closeApplication", {});
+                    }
+                    else {
+                        setMode("home");
+                    }
+                    break
             }
         }
     )

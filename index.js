@@ -103,6 +103,13 @@ export function createWindow() {
                 saveSettings();
                 syncState();
                 break;
+            case "closeApplication":
+                appClosing = true;
+                remoteWindow.close();
+                winApp.close();
+                winInfo.close();
+                winMain.close();
+                break;
             default:
                 console.error(`Undefined action: ${action}`);
         }
@@ -151,10 +158,11 @@ function createMainWindow() {
 
     // When closing the main window, also close the other windows
     winMain.on('close', evt => {
-        appClosing = true;
-        remoteWindow.close();
-        winApp.close();
-        winInfo.close();
+        if (!appClosing) {
+            evt.preventDefault();
+            // Send a close request to the reneder. The renderer can than decide to grant it or not.
+            winMain.webContents.send("main-action", "closeRequest");
+        }
     });
 }
 
