@@ -9,11 +9,13 @@ import * as unzipper from 'unzipper';
 import { getLocalSites, initDataPaths } from './main/local_data.js';
 import { getSettings, saveSettings } from './main/settings.js';
 import { RemoteWindow } from './main/remote_window/remote_window.js';
+import { RemoteWindow2 } from './main/remote_window.js';
 
 /** @type BrowserWindow */
 var winMain;
 
 /** @type RemoteWindow */
+/** @type RemoteWindow2 */
 var remoteWindow;
 
 /** @type BrowserWindow */
@@ -134,7 +136,8 @@ function loadRemote() {
     /** @type string */
     const url = settings.startURL || "";
     if (url.length) {
-        remoteWindow.loadAndShow(url);
+        remoteWindow.show();
+        remoteWindow.setURL(url);
     }
     else {
         winMain.webContents.send("main-action", "setMode", { mode: "settings" });
@@ -167,7 +170,20 @@ function createMainWindow() {
 }
 
 function createRemoteWindow() {
-    remoteWindow = new RemoteWindow(winMain);
+    /**
+     * @param {DownloadResult} res
+     */
+    async function onDownloadReady(res) {
+        if (res.success) {
+            const dirName = path.parse(res.file).name;
+            await extractSite(dirName);
+            await refreshLocalSites();
+        }
+        remoteWindow.hide();
+    }
+
+    remoteWindow = new RemoteWindow2(winMain, sitesDir, onDownloadReady);
+    // remoteWindow = new RemoteWindow(winMain);
 
     // Only hide the window, unless explicitly indicated to close it
     remoteWindow.on('close', evt => {
@@ -175,38 +191,6 @@ function createRemoteWindow() {
             evt.preventDefault();
             remoteWindow.hide();
         }
-    });
-
-    remoteWindow.addDownloadHandler((event, item, webContents) => {
-        const fileName = item.getFilename();
-        const dlPath = path.resolve(sitesDir, fileName);
-        const dirName = path.parse(fileName).name;
-        // Set the save path, making Electron not to prompt a save dialog.
-        item.setSavePath(dlPath);
-        console.log(`Set save path to ${item.getSavePath()}`);
-
-        item.on('updated', (event, state) => {
-            if (state === 'interrupted') {
-                console.log('Download is interrupted but can be resumed')
-            } else if (state === 'progressing') {
-                if (item.isPaused()) {
-                    console.log('Download is paused')
-                } else {
-                    console.log(`Received bytes: ${item.getReceivedBytes()}`)
-                }
-            }
-        })
-        item.once('done', async (event, state) => {
-            if (state === 'completed') {
-                console.log('Downloaded successfully');
-                // Successful download: unzip the file into the same directory (unzipper)
-                await extractSite(dirName);
-                await refreshLocalSites();
-            } else {
-                console.log(`Download failed: ${state}`)
-            }
-            remoteWindow.hide();
-        })
     });
 }
 

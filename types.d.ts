@@ -21,3 +21,8 @@ interface MenuItemDesc {
     action?: () => void;
     subMenu?: MenuItemDesc[];
 }
+
+interface DownloadResult {
+    success: boolean;
+    file: string;
+}
