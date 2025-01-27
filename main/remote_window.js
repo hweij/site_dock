@@ -69,8 +69,10 @@ export class RemoteWindow extends BrowserWindow {
             width: 800,
             height: 700,
             autoHideMenuBar: true,
-            title: "Remote sites",
+            title: "Install from remote site",
             parent: parent,
+            minimizable: false,
+            maximizable: false,
             show: false
         });
         this.sitesDir = sitesDir;
@@ -101,6 +103,7 @@ export class RemoteWindow extends BrowserWindow {
     setURL(url) {
         if (url !== this.currentURL) {
             this.vContent.webContents.loadURL(url);
+            this.title = `Install from remote site: ${url}`;
             this.currentURL = url;
         }
     }
