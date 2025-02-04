@@ -45,6 +45,7 @@ export function init() {
     bHelp.onclick = () => setMode("help");
     const bCloseHelp = /** @type HTMLButtonElement */ (document.getElementById("bCloseHelp"));
     bCloseHelp.onclick = () => setMode("home");
+    const selAutoStart = /** @type HTMLSelectElement */(document.getElementById("selAutoStart"));
 
     // Define handlers for main => renderer actions
     API.onMainAction(
@@ -81,6 +82,7 @@ export function init() {
             const divLocalSites = /** @type HTMLDivElement */ (document.getElementById("localSites"));
             divLocalSites.innerHTML = "";
             if (sites.length) {
+                // Compose sites list
                 for (let e of sites) {
                     const name = e.name;
                     const label = e.info?.name ? e.info.name : name;
@@ -97,6 +99,15 @@ export function init() {
                     // bDelete.onclick = (evt) => { evt.stopPropagation(); uiAction("deleteSite", { name }); showDialog(`Delete app ${name}?`) };
                     bDelete.onclick = (evt) => { evt.stopPropagation(); showDialog(`Delete app ${name}?`, () => uiAction("deleteSite", { name })) };
                 }
+                // Refresh start-app selection
+                selAutoStart.options.length = 1;
+                for (const site of sites) {
+                    console.log(site.name);
+                    const option = /** @type HTMLOptionElement */(EL("option", "", site.info?.name || site.name));
+                    option.value = site.name;
+                    selAutoStart.appendChild(option);
+                }
+                selAutoStart.value = appState.autoStart || "";
             }
             else {
                 // No sites, display instructions
@@ -118,6 +129,7 @@ export function init() {
 function initSettings() {
     const inputRemoteURL = /** @type HTMLInputElement */ (document.getElementById("inputRemoteURL"));
     const cbStartFS = /** @type HTMLInputElement */ (document.getElementById("cbStartFS"));
+    const selAutoStart = /** @type HTMLSelectElement */(document.getElementById("selAutoStart"));
     const bApplySettings = /** @type HTMLButtonElement */ (document.getElementById("bApplySettings"));
     const bCancelSettings = /** @type HTMLButtonElement */ (document.getElementById("bCancelSettings"));
     bApplySettings.onclick = () => {
@@ -125,6 +137,7 @@ function initSettings() {
         const url = inputRemoteURL.value;
         params.url = url;
         params.startFS = cbStartFS.checked;
+        params.autoStart = selAutoStart.value;
         uiAction("applySettings", params);
         // Done: go back home
         setMode("home");
@@ -149,6 +162,11 @@ function applySettingsChanges(changes) {
     // Start apps in fullscreen mode
     if (changes.startFS) {
         (/** @type HTMLInputElement */ (document.getElementById("cbStartFS"))).checked = changes.startFS;
+    }
+
+    // Auto-start
+    if (changes.autoStart) {
+        (/** @type HTMLSelectElement */ (document.getElementById("selAutoStart"))).value = changes.autoStart || "";
     }
 }
 

@@ -95,12 +95,15 @@ export function createWindows() {
                 deleteSite(params.name);
                 break;
             case "applySettings":
-                // Start URL
+                // Remote URL
                 settings.remoteURL = params.url;
                 appState.remoteURL = params.url;
                 // Start in fullscreen option
                 settings.startFS = params.startFS;
                 appState.startFS = params.startFS;
+                // Autostart app
+                settings.autoStart = params.autoStart;
+                appState.autoStart = params.autoStart;
                 saveSettings();
                 syncState();
                 break;
@@ -123,6 +126,7 @@ app.whenReady().then(async () => {
     // Get remote URL
     appState.remoteURL = settings.remoteURL;
     appState.startFS = Boolean(settings.startFS);
+    appState.autoStart = settings.autoStart;
     // Load local sites
     appState.localSites = await getLocalSites();
     globalShortcut.register('Escape', () => {
