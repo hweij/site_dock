@@ -1,4 +1,4 @@
 {
     "README": "To set defaults, modify this file. When settings are not available, this file will be used to initialize them.",
-    "startURL": ""
+    "remoteURL": ""
 }

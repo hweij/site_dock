@@ -96,8 +96,8 @@ export function createWindow() {
                 break;
             case "applySettings":
                 // Start URL
-                settings.startURL = params.url;
-                appState.startURL = params.url;
+                settings.remoteURL = params.url;
+                appState.remoteURL = params.url;
                 // Start in fullscreen option
                 settings.startFS = params.startFS;
                 appState.startFS = params.startFS;
@@ -121,7 +121,7 @@ app.whenReady().then(async () => {
     // Load settings
     settings = await getSettings();
     // Get remote URL
-    appState.startURL = settings.startURL;
+    appState.remoteURL = settings.remoteURL;
     appState.startFS = Boolean(settings.startFS);
     // Load local sites
     appState.localSites = await getLocalSites();
@@ -133,7 +133,7 @@ app.whenReady().then(async () => {
 
 function loadRemote() {
     /** @type string */
-    const url = settings.startURL || "";
+    const url = settings.remoteURL || "";
     if (url.length) {
         remoteWindow.show();
         remoteWindow.setURL(url);

@@ -116,13 +116,13 @@ export function init() {
 }
 
 function initSettings() {
-    const inputStartURL = /** @type HTMLInputElement */ (document.getElementById("inputStartURL"));
+    const inputRemoteURL = /** @type HTMLInputElement */ (document.getElementById("inputRemoteURL"));
     const cbStartFS = /** @type HTMLInputElement */ (document.getElementById("cbStartFS"));
     const bApplySettings = /** @type HTMLButtonElement */ (document.getElementById("bApplySettings"));
     const bCancelSettings = /** @type HTMLButtonElement */ (document.getElementById("bCancelSettings"));
     bApplySettings.onclick = () => {
         const params = {};
-        const url = inputStartURL.value;
+        const url = inputRemoteURL.value;
         params.url = url;
         params.startFS = cbStartFS.checked;
         uiAction("applySettings", params);
@@ -130,7 +130,7 @@ function initSettings() {
         setMode("home");
     }
     bCancelSettings.onclick = () => {
-        inputStartURL.value = appState.startURL || "";
+        inputRemoteURL.value = appState.remoteURL || "";
         cbStartFS.checked = appState.startFS || false;
         setMode("home");
     }
@@ -142,8 +142,8 @@ function initSettings() {
  */
 function applySettingsChanges(changes) {
     // Start URL
-    if (changes.startURL) {
-        (/** @type HTMLInputElement */ (document.getElementById("inputStartURL"))).value = changes.startURL;
+    if (changes.remoteURL) {
+        (/** @type HTMLInputElement */ (document.getElementById("inputRemoteURL"))).value = changes.remoteURL;
     }
 
     // Start apps in fullscreen mode
