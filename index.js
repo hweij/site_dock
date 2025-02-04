@@ -65,7 +65,7 @@ function showAppWindow(b) {
     }
 }
 
-export function createWindow() {
+export function createWindows() {
     createMainWindow();
     createRemoteWindow();
     createAppWindow();
@@ -127,8 +127,12 @@ app.whenReady().then(async () => {
     appState.localSites = await getLocalSites();
     globalShortcut.register('Escape', () => {
         showAppWindow(false);
-    })
-    createWindow()
+    });
+    createWindows();
+    // If an auto-start app is specified, start it now
+    if (settings.autoStart) {
+        launchSite(settings.autoStart);
+    }
 })
 
 function loadRemote() {
