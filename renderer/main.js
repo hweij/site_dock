@@ -111,15 +111,13 @@ export function init() {
             }
             else {
                 // No sites, display instructions
-                divLocalSites.innerHTML = [
-                    "No web apps have been installed yet, install them first, using the button at the bottom of this page.",
-                    "&nbsp",
-                    "The first time, you will be prompted to enter a URL. Use the one that contains the site archives (as instructed).", "A window will be displayed in which you can select and download a site zip-archive. When the download is started, the site will automatically be added to the list, and you can run the site app.",
-                    "&nbsp",
-                    "In the settings section, you can change the download URL, and also specify whether apps should be started in full-screen mode",
-                    "&nbsp",
-                    "To exit fullscreen mode or close the web app, you can either use the close button or press the Escape key."
-                ].join("<br/>");
+                divLocalSites.innerHTML =
+                    `<div class="no-sites-wrapper">
+                            <div class="no-sites-text">No web apps have been installed yet.</div>
+                            <div class="text-button">&gt;&gt; Instructions</div>
+                    </div>`;
+                const bi = /** @type HTMLButtonElement */(divLocalSites.querySelector(".text-button"));
+                bi.onclick = () => setMode("help");
             }
         }
         applySettingsChanges(changes);
