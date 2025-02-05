@@ -132,7 +132,7 @@ function initSettings() {
     const bCancelSettings = /** @type HTMLButtonElement */ (document.getElementById("bCancelSettings"));
     bApplySettings.onclick = () => {
         const params = {};
-        const url = inputRemoteURL.value;
+        const url = inputRemoteURL.value.trim();
         params.url = url;
         params.startFS = cbStartFS.checked;
         params.autoStart = selAutoStart.value;
@@ -144,6 +144,10 @@ function initSettings() {
         inputRemoteURL.value = appState.remoteURL || "";
         cbStartFS.checked = appState.startFS || false;
         setMode("home");
+    }
+    inputRemoteURL.onblur = () => {
+        // Trim field on focus lost
+        inputRemoteURL.value = inputRemoteURL.value.trim()
     }
 }
 
