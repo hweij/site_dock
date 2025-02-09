@@ -1,0 +1,9 @@
+export APPLE_ID=your-email@...
+export APPLE_ID_PASSWORD=get one from your apple account
+export APPLE_TEAM_ID=as listed on developer details
+
+// Can check like this
+printenv | grep APPLE
+
+// Build, sign, notarize
+npm run pack-mac

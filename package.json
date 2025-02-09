@@ -1,10 +1,24 @@
 {
   "name": "site_dock",
   "displayName": "Site downloader/runner",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Site loader to run static sites locally",
   "main": "index.js",
   "type": "module",
+  "build": {
+    "afterSign": "notarize.js",
+    "mac": {
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "notarize": false,
+      "target": "dmg",
+      "gatekeeperAssess": false,
+      "hardenedRuntime": true
+    },
+    "dmg": {
+      "sign": false
+    }
+  },
   "scripts": {
     "start": "electron .",
     "pack-win": "electron-builder --win zip --x64",
@@ -15,7 +29,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^34.0.0",
-    "electron-builder": "^25.1.8"
+    "electron-builder": "^25.1.8",
+    "electron-builder-notarize": "^1.5.2"
   },
   "dependencies": {
     "unzipper": "^0.12.3"
