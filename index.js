@@ -82,6 +82,9 @@ export function createWindows() {
             case "loadLocal":
                 loadLocal();
                 break;
+            case "loadSites":
+                loadSites(params.files);
+                break;
             case "launchSite":
                 console.log(`Launching site ${params.name}`);
                 launchSite(params.name);
@@ -351,16 +354,38 @@ async function loadLocal() {
     const res = await openFile();
     if (!res.canceled) {
         const sourceFile = res.filePaths[0];
-        if (sourceFile.endsWith(".zip")) {
-            const fName = path.parse(sourceFile).base;
-            const destFile = path.resolve(sitesDir, fName);
-            await fs.promises.copyFile(sourceFile, destFile);
-            console.log(`Copied file ${sourceFile} to ${destFile}`);
-            refreshLocalSites();
-        }
-        else {
-            console.log(`File ${sourceFile} is not a valid zip-archive`);
-        }
+        await loadSiteFromPath(sourceFile);
+    }
+}
+
+/**
+ * Load site from path.
+ *
+ * @param {string} sourceFile
+ */
+async function loadSiteFromPath(sourceFile) {
+    if (sourceFile.endsWith(".zip")) {
+        const fName = path.parse(sourceFile).base;
+        const destFile = path.resolve(sitesDir, fName);
+        await fs.promises.copyFile(sourceFile, destFile);
+        console.log(`Copied file ${sourceFile} to ${destFile}`);
+        refreshLocalSites();
+    }
+    else {
+        console.log(`File ${sourceFile} is not a valid zip-archive`);
+    }
+}
+
+/**
+ * Load a list of sites (zip-files), given the local path.
+ *
+ * @param {string[]} pathList
+ */
+async function loadSites(pathList) {
+    console.log("Loading sites");
+    for (const path of pathList) {
+        console.log(`Loading ${path}`);
+        await loadSiteFromPath(path);
     }
 }
 

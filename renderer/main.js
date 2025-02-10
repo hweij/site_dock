@@ -14,6 +14,13 @@ const API = (/** @type any */ (window)).electronAPI;
 /** @type (name: string, params: object) => void */
 const uiAction = API.uiAction;
 
+/**
+ * Helper: get full path for file
+ *
+ * @type (file: File) => string
+ */
+const getFullPath = API.getFullPath;
+
 var curMode = "home";
 
 async function setMode(mode) {
@@ -113,7 +120,11 @@ export function init() {
                 // No sites, display instructions
                 divLocalSites.innerHTML =
                     `<div class="no-sites-wrapper">
-                            <div class="no-sites-text">No web apps have been installed yet.</div>
+                            <div class="no-sites-text">
+                                No web apps have been installed yet.<br />
+                                Drop archives (zip-files) here or use the<br />
+                                "Add apps" button to add apps.
+                            </div>
                             <div class="text-button">&gt;&gt; Instructions</div>
                     </div>`;
                 const bi = /** @type HTMLButtonElement */(divLocalSites.querySelector(".text-button"));
@@ -122,6 +133,37 @@ export function init() {
         }
         applySettingsChanges(changes);
     });
+
+    // Handler drag and drop of sites (zip-archives)
+    addDropHandlers(document.getElementById("page-home"));
+}
+
+/**
+ *
+ * @param {HTMLElement | null} el
+ */
+function addDropHandlers(el) {
+    if (el) {
+        el.ondragover = (evt) => {
+            evt.preventDefault();
+            if (evt.dataTransfer) {
+                evt.dataTransfer.dropEffect = "copy";
+            }
+        }
+        el.ondrop = (evt) => {
+            evt.preventDefault();
+            if (evt.dataTransfer) {
+                const files = evt.dataTransfer.files;
+                const filePaths = [];
+                for (const file of files) {
+                    const p = getFullPath(file);
+                    console.log();
+                    filePaths.push(p);
+                }
+                uiAction("loadSites", { files: filePaths });
+            }
+        }
+    }
 }
 
 function initSettings() {
