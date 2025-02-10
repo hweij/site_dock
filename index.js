@@ -370,7 +370,8 @@ async function loadSiteFromPath(sourceFile) {
         const destFile = path.resolve(sitesDir, fName);
         await fs.promises.copyFile(sourceFile, destFile);
         console.log(`Copied file ${sourceFile} to ${destFile}`);
-        refreshLocalSites();
+        const dirName = path.parse(destFile).name;
+        await extractSite(dirName);
     }
     else {
         console.log(`File ${sourceFile} is not a valid zip-archive`);
