@@ -1,7 +1,7 @@
 {
   "name": "site_dock",
   "displayName": "Site downloader/runner",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Site loader to run static sites locally",
   "main": "index.js",
   "type": "module",
