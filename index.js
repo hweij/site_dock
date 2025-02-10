@@ -315,6 +315,8 @@ async function loadLocal() {
  */
 async function loadSiteFromPath(sourceFile) {
     if (sourceFile.endsWith(".zip")) {
+        // Clean up path, in case they were renamed to something like "file.zip (1)"
+        sourceFile = cleanFileName(sourceFile);
         const fName = path.parse(sourceFile).base;
         const destFile = path.resolve(sitesDir, fName);
         await fs.promises.copyFile(sourceFile, destFile);
@@ -325,6 +327,27 @@ async function loadSiteFromPath(sourceFile) {
     else {
         console.log(`File ${sourceFile} is not a valid zip-archive`);
     }
+}
+
+/**
+ * Cleans a file name by checking if it has any extensions
+ * introduced by a download (e.g. "my-file (1).zip", or "my-file [2].zip").
+ * If it does, it will take the "proper" base name and return that.
+ * The folder path will not be affected, even if it has the special
+ * characters in it.
+ *
+ * @param {string} fname
+ * @returns
+ */
+function cleanFileName(fname) {
+    const pathData = path.parse(fname);
+    const baseName = pathData.name;
+    const parts = baseName.split(/[\[\] ,()]+/);
+    if (parts.length > 1) {
+        const dir = pathData.dir;
+        fname = path.join(dir, parts[0] + ".zip");
+    }
+    return fname;
 }
 
 /**
