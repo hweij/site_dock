@@ -29,36 +29,39 @@ export async function getLocalSites() {
     const sitesDir = getSitesDir();
     const files = await fs.promises.readdir(sitesDir);
     for (const f of files) {
-        if (f.endsWith(".zip")) {
-            const baseName = f.substring(0, f.length - 4);
-            const idx = (res.findIndex(e => e.name === baseName));
-            if (idx >= 0) {
-                res[idx].zipped = true;
-            }
-            else {
-                res.push({ name: baseName, expanded: false, zipped: true });
-            }
-        }
-        else {
-            // Check if there's an info file present
-            const infoFile = path.join(sitesDir, f, "app_info/index.json");
-            /** @type object | undefined */
-            let info = undefined;
-            if (fs.existsSync(infoFile)) {
-                const txt = await fs.promises.readFile(infoFile, { encoding: "utf8" });
-                info = JSON.parse(txt);
-                // Check if the info has an image reference. If so, convert relative to absolute path for the viewer
-                if (info.image) {
-                    info.image = path.resolve(sitesDir, f, "app_info", info.image);
+        // Ignore dot-files (Mac)
+        if (!f.startsWith(".")) {
+            if (f.endsWith(".zip")) {
+                const baseName = f.substring(0, f.length - 4);
+                const idx = (res.findIndex(e => e.name === baseName));
+                if (idx >= 0) {
+                    res[idx].zipped = true;
+                }
+                else {
+                    res.push({ name: baseName, expanded: false, zipped: true });
                 }
             }
-            const idx = (res.findIndex(e => e.name === f));
-            if (idx >= 0) {
-                res[idx].expanded = true;
-                res[idx].info = info;
-            }
             else {
-                res.push({ name: f, expanded: true, zipped: false, info });
+                // Check if there's an info file present
+                const infoFile = path.join(sitesDir, f, "app_info/index.json");
+                /** @type object | undefined */
+                let info = undefined;
+                if (fs.existsSync(infoFile)) {
+                    const txt = await fs.promises.readFile(infoFile, { encoding: "utf8" });
+                    info = JSON.parse(txt);
+                    // Check if the info has an image reference. If so, convert relative to absolute path for the viewer
+                    if (info.image) {
+                        info.image = path.resolve(sitesDir, f, "app_info", info.image);
+                    }
+                }
+                const idx = (res.findIndex(e => e.name === f));
+                if (idx >= 0) {
+                    res[idx].expanded = true;
+                    res[idx].info = info;
+                }
+                else {
+                    res.push({ name: f, expanded: true, zipped: false, info });
+                }
             }
         }
     }
