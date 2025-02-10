@@ -92,19 +92,25 @@ export function init() {
                 // Compose sites list
                 for (let e of sites) {
                     const name = e.name;
-                    const label = e.info?.name ? e.info.name : name;
+                    const label = EL("div", "site-list-entry-title", e.info?.name ? e.info.name : name);
                     const bInfo = e.info ? EL("div", "info", "info") : EL("div");
                     const bDelete = EL("div", "delete", "delete");
                     const entryOptions = EL("div", "entry-options", bInfo, bDelete);
-                    const line = EL("div", "site-list-entry", label, entryOptions);
 
                     // TEST TEST image
+                    /** @type HTMLElement */
+                    let icon;
                     if (e.info?.image) {
                         console.log(`Image for ${name}: ${e.info.image}`);
                         const img = /** @type HTMLImageElement */(EL("img"));
                         img.src = e.info.image;
-                        line.appendChild(img);
+                        icon = img;
                     }
+                    else {
+                        icon = EL("div", "text-icon", name.slice(0, 1).toUpperCase());
+                    }
+
+                    const line = EL("div", "site-list-entry", entryOptions, icon, label);
 
                     divLocalSites.append(line);
                     line.onclick = () => uiAction("launchSite", { name });

@@ -157,7 +157,7 @@ function loadRemote() {
 function createMainWindow() {
     winMain = new BrowserWindow({
         width: 640,
-        height: 700,
+        height: 720,
         title: "Site dock",
         autoHideMenuBar: true,
         webPreferences: {
