@@ -8,14 +8,9 @@ import * as unzipper from 'unzipper';
 
 import { getLocalSites, initDataPaths } from './main/local_data.js';
 import { getSettings, saveSettings } from './main/settings.js';
-import { RemoteWindow } from './main/remote_window.js';
 
 /** @type BrowserWindow */
 var winMain;
-
-/** @type RemoteWindow */
-/** @type RemoteWindow */
-var remoteWindow;
 
 /** @type BrowserWindow */
 var winApp;
@@ -23,7 +18,7 @@ var winApp;
 /** @type BrowserWindow */
 var winInfo;
 
-/** If set to true, the remote window will allow closing (see close event on remote window) */
+/** If set to true, the info window will allow closing (see close event on info window) */
 var appClosing = false;
 
 const sitesDir = initDataPaths();
@@ -67,7 +62,6 @@ function showAppWindow(b) {
 
 export function createWindows() {
     createMainWindow();
-    createRemoteWindow();
     createAppWindow();
     createInfoWindow();
 
@@ -76,9 +70,6 @@ export function createWindows() {
         // console.log(`UI-action: ${action}`);
         // console.log(JSON.stringify(params));
         switch (action) {
-            case "loadRemote":
-                loadRemote();
-                break;
             case "loadLocal":
                 loadLocal();
                 break;
@@ -98,9 +89,6 @@ export function createWindows() {
                 deleteSite(params.name);
                 break;
             case "applySettings":
-                // Remote URL
-                settings.remoteURL = params.url;
-                appState.remoteURL = params.url;
                 // Start in fullscreen option
                 settings.startFS = params.startFS;
                 appState.startFS = params.startFS;
@@ -112,7 +100,6 @@ export function createWindows() {
                 break;
             case "closeApplication":
                 appClosing = true;
-                remoteWindow.close();
                 winApp.close();
                 winInfo.close();
                 winMain.close();
@@ -126,8 +113,6 @@ export function createWindows() {
 app.whenReady().then(async () => {
     // Load settings
     settings = await getSettings();
-    // Get remote URL
-    appState.remoteURL = settings.remoteURL;
     appState.startFS = Boolean(settings.startFS);
     appState.autoStart = settings.autoStart;
     // Load local sites
@@ -141,18 +126,6 @@ app.whenReady().then(async () => {
         launchSite(settings.autoStart);
     }
 })
-
-function loadRemote() {
-    /** @type string */
-    const url = settings.remoteURL || "";
-    if (url.length) {
-        remoteWindow.show();
-        remoteWindow.setURL(url);
-    }
-    else {
-        winMain.webContents.send("main-action", "setMode", { mode: "settings" });
-    }
-}
 
 function createMainWindow() {
     winMain = new BrowserWindow({
@@ -175,30 +148,6 @@ function createMainWindow() {
             evt.preventDefault();
             // Send a close request to the reneder. The renderer can than decide to grant it or not.
             winMain.webContents.send("main-action", "closeRequest");
-        }
-    });
-}
-
-function createRemoteWindow() {
-    /**
-     * @param {DownloadResult} res
-     */
-    async function onDownloadReady(res) {
-        if (res.success) {
-            const dirName = path.parse(res.file).name;
-            await extractSite(dirName);
-            await refreshLocalSites();
-        }
-        remoteWindow.hide();
-    }
-
-    remoteWindow = new RemoteWindow(winMain, sitesDir, onDownloadReady);
-
-    // Only hide the window, unless explicitly indicated to close it
-    remoteWindow.on('close', evt => {
-        if (!appClosing) {
-            evt.preventDefault();
-            remoteWindow.hide();
         }
     });
 }

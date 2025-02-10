@@ -25,19 +25,14 @@
 
         <div id="localSites" class="site-list">Local sites go here</div>
 
-        <div style="display: grid; gap: 10px; grid-template-columns: 1fr 1fr;">
-            <button id="bLocalApp" class="app-button">Add apps</button>
-            <button id="bDownload" class="app-button">Add from remote</button>
+        <div style="display: flex; justify-content: center;">
+            <button id="bLocalApp" class="app-button" style="padding: 8px 12px;">Add apps</button>
         </div>
     </div>
     <div id="page-settings" class="page hidden">
         <h1>Settings</h1>
 
         <div class="settings">
-            <!-- Start URL -->
-            <div>Start URL</div>
-            <input id="inputRemoteURL" />
-
             <!-- Start apps in fullscreen mode? -->
             <div>Start apps in fullscreen</div>
             <input id="cbStartFS" type="checkbox" style="margin-right: auto;" />
@@ -61,23 +56,6 @@
         <div style="overflow-y: auto;">
             <p>
                 The site dock allows you to install and view static sites /web-apps.
-            </p>
-
-            <h3>Install from remote</h3>
-
-            <p>
-                Note: when installing from a remote location for the first time,
-                you will be prompted to set a remote Start URL.
-                You can also change this in the settings.
-                This should point to where the app-archives are located.
-            </p>
-
-            <p>
-                After opening the remote location (you may need to log in, depending on the location),
-                you will be directed to the start-URL
-                as set in the settings. Look for the app (zip-file) to install, and
-                download it. After the download completes, the app will be installed and
-                appear in the app-list.
             </p>
 
             <h3>Install from local archive</h3>
@@ -118,8 +96,8 @@
             </p>
 
             <ul>
-                <li>Start URL: the location to open when installing from remote</li>
                 <li>Start apps in fullscreen: when checked, the apps will be launched in full-screen mode</li>
+                <li>Auto-start app: will run automatically when the site dock is started</li>
             </ul>
 
             <h3>Notes</h3>

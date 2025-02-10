@@ -1,5 +1,4 @@
 interface AppState {
-    remoteURL?: string;
     startFS?: boolean;
     autoStart?: string;
     localSites?: LocalSite[];

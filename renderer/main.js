@@ -42,8 +42,6 @@ export function init() {
 
     const API = (/** @type any */ (window)).electronAPI;
 
-    const bDownload = /** @type HTMLButtonElement */ (document.getElementById("bDownload"));
-    bDownload.onclick = () => API.uiAction("loadRemote");
     const bLocalApp = /** @type HTMLButtonElement */ (document.getElementById("bLocalApp"));
     bLocalApp.onclick = () => API.uiAction("loadLocal");
     const bSettings = /** @type HTMLButtonElement */ (document.getElementById("bSettings"));
@@ -181,15 +179,12 @@ function addDropHandlers(el) {
 }
 
 function initSettings() {
-    const inputRemoteURL = /** @type HTMLInputElement */ (document.getElementById("inputRemoteURL"));
     const cbStartFS = /** @type HTMLInputElement */ (document.getElementById("cbStartFS"));
     const selAutoStart = /** @type HTMLSelectElement */(document.getElementById("selAutoStart"));
     const bApplySettings = /** @type HTMLButtonElement */ (document.getElementById("bApplySettings"));
     const bCancelSettings = /** @type HTMLButtonElement */ (document.getElementById("bCancelSettings"));
     bApplySettings.onclick = () => {
         const params = {};
-        const url = inputRemoteURL.value.trim();
-        params.url = url;
         params.startFS = cbStartFS.checked;
         params.autoStart = selAutoStart.value;
         uiAction("applySettings", params);
@@ -197,13 +192,8 @@ function initSettings() {
         setMode("home");
     }
     bCancelSettings.onclick = () => {
-        inputRemoteURL.value = appState.remoteURL || "";
         cbStartFS.checked = appState.startFS || false;
         setMode("home");
-    }
-    inputRemoteURL.onblur = () => {
-        // Trim field on focus lost
-        inputRemoteURL.value = inputRemoteURL.value.trim()
     }
 }
 
@@ -212,11 +202,6 @@ function initSettings() {
  * @param {AppState} changes
  */
 function applySettingsChanges(changes) {
-    // Start URL
-    if (changes.remoteURL) {
-        (/** @type HTMLInputElement */ (document.getElementById("inputRemoteURL"))).value = changes.remoteURL;
-    }
-
     // Start apps in fullscreen mode
     if (changes.startFS) {
         (/** @type HTMLInputElement */ (document.getElementById("cbStartFS"))).checked = changes.startFS;
