@@ -355,6 +355,7 @@ async function loadLocal() {
     if (!res.canceled) {
         const sourceFile = res.filePaths[0];
         await loadSiteFromPath(sourceFile);
+        refreshLocalSites();
     }
 }
 
@@ -383,9 +384,12 @@ async function loadSiteFromPath(sourceFile) {
  */
 async function loadSites(pathList) {
     console.log("Loading sites");
-    for (const path of pathList) {
-        console.log(`Loading ${path}`);
-        await loadSiteFromPath(path);
+    if (pathList.length) {
+        for (const path of pathList) {
+            console.log(`Loading ${path}`);
+            await loadSiteFromPath(path);
+        }
+        refreshLocalSites();
     }
 }
 
