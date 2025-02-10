@@ -14,6 +14,7 @@ interface LocalSite {
 
 interface AppInfo {
     name?: string;
+    image?: string;
     docs?: string;
 }
 

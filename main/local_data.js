@@ -47,6 +47,10 @@ export async function getLocalSites() {
             if (fs.existsSync(infoFile)) {
                 const txt = await fs.promises.readFile(infoFile, { encoding: "utf8" });
                 info = JSON.parse(txt);
+                // Check if the info has an image reference. If so, convert relative to absolute path for the viewer
+                if (info.image) {
+                    info.image = path.resolve(sitesDir, f, "app_info", info.image);
+                }
             }
             const idx = (res.findIndex(e => e.name === f));
             if (idx >= 0) {

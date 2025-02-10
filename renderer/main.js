@@ -98,6 +98,14 @@ export function init() {
                     const entryOptions = EL("div", "entry-options", bInfo, bDelete);
                     const line = EL("div", "site-list-entry", label, entryOptions);
 
+                    // TEST TEST image
+                    if (e.info?.image) {
+                        console.log(`Image for ${name}: ${e.info.image}`);
+                        const img = /** @type HTMLImageElement */(EL("img"));
+                        img.src = e.info.image;
+                        line.appendChild(img);
+                    }
+
                     divLocalSites.append(line);
                     line.onclick = () => uiAction("launchSite", { name });
                     if (e.info) {
