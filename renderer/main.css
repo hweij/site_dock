@@ -76,7 +76,7 @@ h3 {
     width: 120px;
     height: 120px;
     cursor: pointer;
-    padding: 4px 4px 4px 8px;
+    padding: 4px;
     border-radius: 6px;
     background-color: var(--blue-4);
     display: grid;
