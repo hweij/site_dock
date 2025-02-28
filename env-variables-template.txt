@@ -7,3 +7,7 @@ printenv | grep APPLE
 
 // Build, sign, notarize
 npm run pack-mac
+
+// Check notarization:
+spctl -a -vvv -t install site_dock.app
+
