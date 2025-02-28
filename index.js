@@ -315,10 +315,12 @@ async function loadLocal() {
  */
 async function loadSiteFromPath(sourceFile) {
     if (sourceFile.endsWith(".zip")) {
+        console.log(`File name: [${sourceFile}]`);
         // Clean up path, in case they were renamed to something like "file.zip (1)"
-        sourceFile = cleanFileName(sourceFile);
-        const fName = path.parse(sourceFile).base;
-        const destFile = path.resolve(sitesDir, fName);
+        const baseName = path.parse(sourceFile).base;
+        const cleanBaseName = cleanFileName(baseName);
+        console.log(`Cleaned file name: [${cleanBaseName}]`);
+        const destFile = path.resolve(sitesDir, cleanBaseName);
         await fs.promises.copyFile(sourceFile, destFile);
         console.log(`Copied file ${sourceFile} to ${destFile}`);
         const dirName = path.parse(destFile).name;
@@ -336,18 +338,17 @@ async function loadSiteFromPath(sourceFile) {
  * The folder path will not be affected, even if it has the special
  * characters in it.
  *
- * @param {string} fname
+ * @param {string} baseName file name WITH extension, WITHOUT path
  * @returns
  */
-function cleanFileName(fname) {
-    const pathData = path.parse(fname);
-    const baseName = pathData.name;
+function cleanFileName(baseName) {
     const parts = baseName.split(/[\[\] ,()]+/);
     if (parts.length > 1) {
-        const dir = pathData.dir;
-        fname = path.join(dir, parts[0] + ".zip");
+        return parts[0] + ".zip";
     }
-    return fname;
+    else {
+        return baseName;
+    }
 }
 
 /**
