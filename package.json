@@ -28,7 +28,7 @@
   "author": "bigcamp",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^39.8.5",
+    "electron": "^39.8.10",
     "electron-builder": "^26.15.3",
     "electron-builder-notarize": "^1.5.2"
   },
